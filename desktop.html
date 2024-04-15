@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="KR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>신월 7동 하늘지도</title>
+
+<!-- 인하대학교 지역사회와디자인 수업 과제로 제작되었습니다.-->
+<!-- 인하대학교 디자인융합학과 12203894 김선표 제작 -->
+<!-- 본 자료의 무단 복제 및 허가 없는 사용을 금합니다. -->
+<!-- 2024.04.15. 제작 -->
+
+<style>
+  body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow: hidden; /* 마우스 포인터가 보이지 않게 하기 위해 화면 넘침 숨김 */
+  }
+
+  #container {
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    position: relative;
+  }
+
+  #imageA, #imageB {
+    position: absolute;
+  }
+
+  #imageB {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1; /* 이미지 B를 이미지 A 위에 표시 */
+    opacity: 0.9; /* 이미지 B의 투명도 설정 (0.7은 70% 투명) */
+    pointer-events: none; /* 이미지 B에 대한 마우스 이벤트 무시 */
+  }
+</style>
+</head>
+<body>
+
+<div id="container">
+  <!-- 이미지 B -->
+  <img src="Cover_desktop.png" id="imageB" alt="Image B">
+  <!-- 이미지 A -->
+  <img src="Sinwol7_1_SkyMap.png" id="imageA" alt="Image A">
+</div>
+
+<script>
+var container = document.getElementById('container');
+var imageA = document.getElementById('imageA');
+var offsetX = 0;
+var offsetY = 0;
+var isDragging = false;
+
+// 마우스 이벤트 처리
+imageA.addEventListener('mousedown', startDragging);
+container.addEventListener('mousemove', dragImage);
+container.addEventListener('mouseup', stopDragging);
+
+// 터치 이벤트 처리
+imageA.addEventListener('touchstart', startDragging);
+container.addEventListener('touchmove', dragImage);
+container.addEventListener('touchend', stopDragging);
+
+// 드래그 시작
+function startDragging(e) {
+  isDragging = true;
+  var touch = e.touches ? e.touches[0] : e;
+  offsetX = touch.clientX - parseInt(imageA.style.left || 0);
+  offsetY = touch.clientY - parseInt(imageA.style.top || 0);
+}
+
+// 이미지 A를 드래그하여 이동
+function dragImage(e) {
+  if (isDragging) {
+    var touch = e.touches ? e.touches[0] : e;
+    imageA.style.left = (touch.clientX - offsetX) + 'px';
+    imageA.style.top = (touch.clientY - offsetY) + 'px';
+  }
+}
+
+// 드래그 종료
+function stopDragging() {
+  isDragging = false;
+}
+</script>
+
+</body>
+</html>
